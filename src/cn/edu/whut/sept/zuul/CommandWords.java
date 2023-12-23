@@ -4,7 +4,7 @@ public class CommandWords
 {
     private static final String[] validCommands = {
             "go", "quit", "help"
-    };
+    };//final型的合法命令
 
     /**
      * 初始化
@@ -21,6 +21,7 @@ public class CommandWords
      */
     public boolean isCommand(String aString)
     {
+        //遍历判断
         for(int i = 0; i < validCommands.length; i++) {
             if(validCommands[i].equals(aString))
                 return true;

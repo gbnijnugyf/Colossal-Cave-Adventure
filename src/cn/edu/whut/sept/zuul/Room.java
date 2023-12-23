@@ -48,6 +48,7 @@ public class Room {
     private String getExitString() {
         String returnString = "Exits:";
         Set<String> keys = exits.keySet();
+        //遍历加入字符串
         for (String exit : keys) {
             returnString += " " + exit;
         }
