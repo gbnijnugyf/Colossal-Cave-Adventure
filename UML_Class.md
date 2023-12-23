@@ -4,6 +4,8 @@ Game..>Command
 Game "1" o-- "1" Parser
 Game "1" o-- "1" Room
 Parser "1" --> "1" CommandWords
+Parser ..> Command:create
+Game ..> Room:create
 class Command{
     -String commandWord
     -String secondWord
@@ -14,7 +16,7 @@ class Command{
     +hasSecondWord() boolean
 }
 class CommandWords{
-    -String[] validCommands$
+    -String[] validCommands
     +CommandWords()
     +isCommand(aString:String) boolean
     +showAll()
