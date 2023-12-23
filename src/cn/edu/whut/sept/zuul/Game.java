@@ -104,76 +104,12 @@ public class Game
             return false;
         }
 
-//        String commandW = command.getCommandWord();//获取（第一个）命令词
         wantToQuit = parser.handleCmd(command);
-//        if (commandW.equals("help")) {
-//            printHelp();
-//        }
-//        else if (commandW.equals("go")) {
-//            goRoom(command);
-//        }
-//        else if (commandW.equals("quit")) {
-//            wantToQuit = quit(command);
-//        }
         // else command not recognised.
         return wantToQuit;
     }
 
     // implementations of user commands:
-
-    /**
-     * 执行help指令，在终端打印游戏帮助信息.
-     * 此处会输出游戏中用户可以输入的命令列表
-     */
-//    private void printHelp()
-//    {
-//        System.out.println("You are lost. You are alone. You wander");
-//        System.out.println("around at the university.");
-//        System.out.println();
-//        System.out.println("Your command words are:");
-//        parser.showCommands();
-//    }
-
-    /**
-     * 执行go指令，向房间的指定方向出口移动，如果该出口连接了另一个房间，则会进入该房间，
-     * 否则打印输出错误提示信息.
-     */
-    private void goRoom(Command command)
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        }
-        else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
-        }
-    }
-
-    /**
-     * 执行Quit指令，用户退出游戏。如果用户在命令中输入了其他参数，则进一步询问用户是否真的退出.
-     * @return 如果游戏需要退出则返回true，否则返回false.
-     */
-//    private boolean quit(Command command)
-//    {
-//        if(command.hasSecondWord()) {
-//            System.out.println("Quit what?");
-//            return false;
-//        }
-//        else {
-//            return true;  // signal that we want to quit
-//        }
-//    }
 
     /**
      * 由于执行go命令需要对当前房间进行读写操作，于是设置访问器

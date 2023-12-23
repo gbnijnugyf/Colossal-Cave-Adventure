@@ -54,10 +54,4 @@ public class Parser {
         return commands.handleCmd(command);
     }
 
-    /**
-     * 调用commandWords对象的showAll方法展示所有命令
-     */
-    public void showCommands() {
-        commands.showAll();
-    }
 }
