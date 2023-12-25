@@ -19,11 +19,11 @@
 1. 阅读和描述样例工程
     * fork样例工程，并clone到本地仓库；
     * 在本地开发环境上运行样例工程，理解样例工程的代码逻辑；
-    
+
       我首先阅读了Game这个类。这个类对外开放了两个方法，分别是Game和play，Game中调用了内部的creatRoom进行初始化，play方法是一个进行游戏的while
       循环，只要玩家不输入quit，循环就会一直进行。
       createRoom方法创建了一系列房间
-   
+
     * 精读样例工程软件代码，描述代码结构及部件组成；
     * 以UML图描述样例工程的组成及结构图（类及类之间的关系）
         * 可结合markdown语法和mermaid插件绘制所需图形
@@ -42,6 +42,36 @@
    > 在Game类的processCommand()
    方法中，当用户输入的命令被辨认出来以后，有一系列的if语句用来分派程序到不同的地方去执行。从面向对象的设计原则来看，这种解决方案不太好，因为每当要加入一个新的命令时，就得在这一堆if语句中再加入一个if分支，最终会导致这个方法的代码膨胀得极其臃肿。如何改进程序中的这个设计，使得命令的处理更模块化，且新命令的加入能更轻松？请描述你的解决思路，并对你的解决方案进行实现和测试。
 
+   > 答：根据面向对象的设计原则，我将命令单独创建为CommandWord类，而CommandWords类中含有属性cmdWords，其类型为`HashMap<String, CommandWord>`
+   用于存放所有命令。并创建成员函数`private void createCommands()`，在构造函数中调用用于创建命令，`createCommands()`
+   的逻辑就是将CommandWord类型（CommandWord的子类）命令逐一添加进cmdWords中
+   ```
+   cmdWords.put("quit",new CommandQuit(gameInfo,this));
+   cmdWords.put("help",new CommandHelp(gameInfo,this));
+   cmdWords.put("go",new CommandGo(gameInfo,this));
+   ```
+   > 从代码中可以看到添加的命令类型都是以命令命名的类，均为CommandWord子类。CommandWord类中包含两个属性三个方法。
+   ```java
+   public class CommandWord {
+        protected Game gameInfo;
+        protected CommandWords allCmd;
+
+        /**
+        * 构造函数传入执行命令需要获取的信息
+        * @param gameInfo 游戏信息
+        * @param allCmd 命令集合
+        */
+        public CommandWord(Game gameInfo, CommandWords allCmd){
+            this.gameInfo = gameInfo;
+            this.allCmd = allCmd;
+        }
+        public void doCommand(Command command){}
+        public boolean isQuit(){return false;}
+   }
+   ```     
+   > isQuit用于特殊处理quit命令——需要返回退出信息，而其他命令均不返回退出信息，所以默认`reaturn false;`。doCommand函数需要子类实现。不同的
+   > 命令需要用不同的方式实现，而实现这些命令过程中需要用到游戏信息和所有命令信息，因此CommandWord中需要包含Game和CommandWords类型的属性以便于子类执行命令时调用。
+
 4. 功能扩充点
     * 样例工程“world-of-zuul”具备最基本的程序功能，该项目具有极大的扩展空间，各位同学可选择或自行设计系统结构优化或功能扩充需求，完成3项左右的功能扩充实现；
 
@@ -56,8 +86,9 @@
         >
     * 玩家可以随身携带任意数量的物件，但随身物品的总重量不能操过某个上限值；
    > * 在游戏中增加两个新的命令“take”和“drop”，使得玩家可以拾取房间内的指定物品或丢弃身上携带的某件或全部物品，当拾取新的物件时超过了玩家可携带的重量上限，系统应给出提示；
-   >    * 在游戏中增加一个新的命令“items”, 可以打印出当前房间内所有的物件及总重量，以及玩家随身携带的所有物件及总重量；
-   >    * 在某个或某些房间中随机增加一个magic cookie（魔法饼干）物件，并增加一个“eat cookie”命令，如果玩家找到并吃掉魔法饼干，就可以增长玩家的负重能力；
+       >
+    * 在游戏中增加一个新的命令“items”, 可以打印出当前房间内所有的物件及总重量，以及玩家随身携带的所有物件及总重量；
+   > * 在某个或某些房间中随机增加一个magic cookie（魔法饼干）物件，并增加一个“eat cookie”命令，如果玩家找到并吃掉魔法饼干，就可以增长玩家的负重能力；
    > 6. 扩充游戏基本架构，使其支持网络多人游戏模式，具备玩家登陆等功能；
    > 7. 为单机或网络版游戏增加图形化用户界面，用过可以通过图形化界面执行游戏功能；
    > 8. 可以为游戏增加数据库功能，用于保存游戏状态和用户设置；

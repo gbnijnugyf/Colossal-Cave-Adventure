@@ -13,6 +13,8 @@ public class Parser {
     public Parser(Game gameInfo) {
         this.gameInfo = gameInfo;
         commands = new CommandWords(gameInfo);
+
+
         reader = new Scanner(System.in);
     }
 
