@@ -1,5 +1,10 @@
 package cn.edu.whut.sept.zuul;
 
+import cn.edu.whut.sept.zuul.CmdWord.CommandGo;
+import cn.edu.whut.sept.zuul.CmdWord.CommandHelp;
+import cn.edu.whut.sept.zuul.CmdWord.CommandQuit;
+import cn.edu.whut.sept.zuul.CmdWord.CommandWord;
+
 import java.util.HashMap;
 
 public class CommandWords {

@@ -23,11 +23,6 @@ classDiagram
         + doCommand(command: Command): void
     }
 
-    class Game {
-        + getCurrentRoom(): Room
-        + setCurrentRoom(room: Room): void
-    }
-
     class CommandWords {
         + showAll(): void
     }
@@ -35,6 +30,7 @@ classDiagram
     CommandWord <|-- CommandQuit
     CommandWord <|-- CommandHelp
     CommandWord <|-- CommandGo
-    Game *-- CommandWord
+    Parser o-- CommandWords
+    Game <.. Parser
     CommandWords *-- CommandWord
 ~~~

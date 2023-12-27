@@ -5,13 +5,11 @@ import java.util.Scanner;
 public class Parser {
     private CommandWords commands;
     private Scanner reader;
-//    private Game gameInfo;
 
     /**
      * 初始化Parser类，创建commands命令对象、reader扫描输入对象和游戏信息
      */
     public Parser(Game gameInfo) {
-//        this.gameInfo = gameInfo;
         commands = new CommandWords(gameInfo);
         reader = new Scanner(System.in);
     }

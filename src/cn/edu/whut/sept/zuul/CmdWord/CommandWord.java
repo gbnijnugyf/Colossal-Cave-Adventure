@@ -1,4 +1,8 @@
-package cn.edu.whut.sept.zuul;
+package cn.edu.whut.sept.zuul.CmdWord;
+
+import cn.edu.whut.sept.zuul.Command;
+import cn.edu.whut.sept.zuul.CommandWords;
+import cn.edu.whut.sept.zuul.Game;
 
 public class CommandWord {
     protected Game gameInfo;
