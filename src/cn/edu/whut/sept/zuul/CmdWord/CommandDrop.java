@@ -28,13 +28,14 @@ public class CommandDrop extends CommandWord{
         String itemName = command.getSecondWord();
 
         // Try to drop
-        Item pickItem = gameInfo.getPlayer().getItems().getItemsByName(itemName);
+        Item dropItem = gameInfo.getPlayer().getItems().getItemsByName(itemName);
 
-        if (pickItem == null) {
+        if (dropItem == null) {
             System.out.println("There is no item!");
         }  else {
             gameInfo.getPlayer().deleteItem(itemName);
-            System.out.println("throw away "+pickItem.getName()+" successfully");
+            gameInfo.getCurrentRoom().addItem(dropItem);
+            System.out.println("throw away "+dropItem.getName()+" successfully");
         }
     }
 }

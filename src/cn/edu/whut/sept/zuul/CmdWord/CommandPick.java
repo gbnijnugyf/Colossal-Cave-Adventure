@@ -35,6 +35,7 @@ public class CommandPick extends CommandWord{
             System.out.println("you can't carry too much!");
         } else {
             gameInfo.getPlayer().addItem(pickItem);
+            gameInfo.getCurrentRoom().deleteItem(pickItem.getName());
             System.out.println("pick up "+pickItem.getName()+" successfully");
         }
     }

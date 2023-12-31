@@ -72,7 +72,7 @@ public class Room {
     public String getLongDescription() {
         if(monster!=null){
             System.out.println("oh my god, you meet monster!!");
-            System.out.println("fight with it!!!");
+            System.out.println("fight with it or run!!!");
         }
         return "You are " + description + ".\n" + getExitString();
     }
@@ -111,6 +111,12 @@ public class Room {
 
     public void setMonster(Monster monster) {
         this.monster = monster;
+    }
+    public void addItem(Item item){
+        items.addItem(item.getName(),item);
+    }
+    public void deleteItem(String itemName){
+        items.deleteItem(itemName);
     }
 }
 
