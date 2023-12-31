@@ -51,7 +51,24 @@ public class CommandFight extends CommandWord {
         System.out.println("Monster's power: " + monsterTemp.getPower());
 
         //计算玩家血量
-        int playerBlood = playerTemp.getHealth() - monsterTemp.getPower();
+        int playerBlood = playerTemp.getHealth();
+        int hurt = monsterTemp.getPower();
+        while (hurt > 0 && defenseWeapon.size() > 0) {
+            int min = Integer.MAX_VALUE;
+            int idx = -1;
+            for (int i = 0; i < defenseWeapon.size(); i++) {
+                int powerTemp = defenseWeapon.get(i).getPower();
+                //找最小
+                if (powerTemp < min) {
+                    min = powerTemp;
+                    idx = i;
+                }
+            }
+            playerTemp.deleteItem(defenseWeapon.get(idx).getName());
+            defenseWeapon.remove(idx);
+            hurt -= min;
+        }
+        playerBlood -= hurt;
         if (playerBlood <= 0) {
             System.out.println("You lost");
             gameInfo.gameOver();
@@ -62,25 +79,25 @@ public class CommandFight extends CommandWord {
         //计算怪物血量
         int monsterBlood = monsterTemp.getHealth();
         while (attackWeapon.size() > 0 && monsterBlood > 0) {
-            int min = Integer.MIN_VALUE;
+            int max = Integer.MIN_VALUE;
             int idx = -1;
             for (int i = 0; i < attackWeapon.size(); i++) {
                 int powerTemp = attackWeapon.get(i).getPower();
-                if (powerTemp > min) {
-                    min = powerTemp;
+                if (powerTemp > max) {
+                    max = powerTemp;
                     idx = i;
                 }
             }
-            playerTemp.getItems().deleteItem(attackWeapon.get(idx).getName());
+            playerTemp.deleteItem(attackWeapon.get(idx).getName());
             attackWeapon.remove(idx);
-            monsterBlood -= min;
+            monsterBlood -= max;
         }
-        if(monsterBlood>0){
-            System.out.println("Monster is still alive!! Health:"+monsterBlood);
-            System.out.println("Your health:"+playerBlood);
+        if (monsterBlood > 0) {
+            System.out.println("Monster is still alive!! Health:" + monsterBlood);
+            System.out.println("Your health:" + playerBlood);
             System.out.println("Run now!");
             monsterTemp.setHealth(monsterBlood);
-        }else{
+        } else {
             System.out.println("Monster is dead!");
             System.out.println("You are win!!!");
             gameInfo.gameOver();

@@ -5,7 +5,7 @@ import cn.edu.whut.sept.zuul.CommandWords;
 import cn.edu.whut.sept.zuul.Game;
 import cn.edu.whut.sept.zuul.Items.Item;
 
-public class CommandDrop extends CommandWord{
+public class CommandDrop extends CommandWord {
 
     /**
      * 构造函数传入执行命令需要获取的信息
@@ -19,7 +19,7 @@ public class CommandDrop extends CommandWord{
 
     @Override
     public void doCommand(Command command) {
-        if(!command.hasSecondWord()) {
+        if (!command.hasSecondWord()) {
             // if there is no second word, we don't know what to pick...
             System.out.println("drop what?");
             return;
@@ -32,10 +32,10 @@ public class CommandDrop extends CommandWord{
 
         if (dropItem == null) {
             System.out.println("There is no item!");
-        }  else {
+        } else {
             gameInfo.getPlayer().deleteItem(itemName);
             gameInfo.getCurrentRoom().addItem(dropItem);
-            System.out.println("throw away "+dropItem.getName()+" successfully");
+            System.out.println("throw away " + dropItem.getName() + " successfully");
         }
     }
 }
