@@ -14,7 +14,11 @@ public class CommandLook extends CommandWord{
     public CommandLook(Game gameInfo, CommandWords allCmd) {
         super(gameInfo, allCmd);
     }
-
+    /**
+     * Executes the doCommand method.
+     *
+     * @param command The command to execute.
+     */
     @Override
     public void doCommand(Command command) {
         super.doCommand(command);

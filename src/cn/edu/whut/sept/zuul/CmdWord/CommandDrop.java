@@ -16,7 +16,11 @@ public class CommandDrop extends CommandWord {
     public CommandDrop(Game gameInfo, CommandWords allCmd) {
         super(gameInfo, allCmd);
     }
-
+    /**
+     * Executes the drop command.
+     *
+     * @param command The command to execute.
+     */
     @Override
     public void doCommand(Command command) {
         if (!command.hasSecondWord()) {

@@ -15,7 +15,11 @@ public class CommandPick extends CommandWord{
     public CommandPick(Game gameInfo, CommandWords allCmd) {
         super(gameInfo, allCmd);
     }
-
+    /**
+     * Executes the pick command.
+     *
+     * @param command The command to execute.
+     */
     @Override
     public void doCommand(Command command) {
         if(!command.hasSecondWord()) {

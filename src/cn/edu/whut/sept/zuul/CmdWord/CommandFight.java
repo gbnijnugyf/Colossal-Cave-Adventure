@@ -10,7 +10,9 @@ import cn.edu.whut.sept.zuul.Players.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * This class represents a battle command in the game.
+ */
 public class CommandFight extends CommandWord {
     /**
      * 构造函数传入执行命令需要获取的信息
@@ -21,7 +23,11 @@ public class CommandFight extends CommandWord {
     public CommandFight(Game gameInfo, CommandWords allCmd) {
         super(gameInfo, allCmd);
     }
-
+    /**
+     * Executes the battle command.
+     *
+     * @param command The battle command to execute.
+     */
     @Override
     public void doCommand(Command command) {
         Monster monsterTemp = gameInfo.getCurrentRoom().getMonster();

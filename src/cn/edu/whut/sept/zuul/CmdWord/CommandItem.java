@@ -17,7 +17,11 @@ public class CommandItem extends CommandWord{
     public CommandItem(Game gameInfo, CommandWords allCmd) {
         super(gameInfo, allCmd);
     }
-
+    /**
+     * Executes the inventory command.
+     *
+     * @param command The command to execute.
+     */
     @Override
     public void doCommand(Command command) {
 

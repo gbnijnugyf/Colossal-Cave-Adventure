@@ -196,14 +196,26 @@ public class Game {
     public Room getCurrentRoom() {
         return currentRoom;
     }
-
+    /**
+     * Sets the current room for the player.
+     *
+     * @param setCurrentRoom The room to set as the current room.
+     */
     public void setCurrentRoom(Room setCurrentRoom) {
         this.currentRoom = setCurrentRoom;
     }
-
+    /**
+     * Returns the player object.
+     *
+     * @return The player object.
+     */
     public Player getPlayer() {
         return player;
     }
+    /**
+     * Ends the game and performs necessary actions.
+     * Saves the player's current room and exits the game.
+     */
     public void gameOver(){
         String roomName = getKeyByValue(allRoom, currentRoom);
         this.player.setRoomName(roomName);

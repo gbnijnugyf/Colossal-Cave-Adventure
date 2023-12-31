@@ -39,30 +39,18 @@ public class RecordPlayer implements Record {
         this.player.setName(playerName);
         this.allItems = allItems;
     }
-
+    /**
+     * Returns the player object.
+     *
+     * @return The player object.
+     */
     public Player getPlayer() {
         return player;
     }
-
+    /**
+     * Saves the player's data to a CSV file.
+     */
     @Override
-//    public void save() {
-//        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-//            StringBuilder data = new StringBuilder();
-//            data.append(player.getName()).append(",").append(player.getHealth()).append(",").append(player.getWeight()).append(",").append(player.getRoomName()).append(",");
-//
-//            if (!player.getItems().getItems().isEmpty()) {
-//                StringBuilder itemsData = new StringBuilder();
-//                for (Item item : player.getItems().getItems().values()) {
-//                    itemsData.append(item.getName()).append(",");
-//                }
-//                data.append(itemsData.deleteCharAt(itemsData.length() - 1));
-//            }
-//
-//            writer.write(data.toString());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
     public void save() {
         try {
             // 读取CSV文件内容到列表中
@@ -92,23 +80,6 @@ public class RecordPlayer implements Record {
                         }
                         dataLine.append(itemsData.deleteCharAt(itemsData.length() - 1));
                     }
-
-//                    // 更新生命值、负重和房间位置
-//                    data[1] = String.valueOf(player.getHealth());
-//                    data[2] = String.valueOf(player.getWeight());
-//                    data[3] = player.getRoomName();
-//                    // 更新玩家持有物品
-//                    StringBuilder itemsBuilder = new StringBuilder();
-//
-//                    // 添加新物品
-//                    for (HashMap.Entry<String, String> entry : newItems.entrySet()) {
-//                        itemsBuilder.append(",");
-//                        itemsBuilder.append(entry.getKey());
-//                        itemsBuilder.append(":");
-//                        itemsBuilder.append(entry.getValue());
-//                    }
-//
-//                    data[4] = itemsBuilder.toString();
                     // 更新行数据
                     lines.set(i, String.valueOf(dataLine));
 
@@ -130,7 +101,11 @@ public class RecordPlayer implements Record {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Loads the player's data from a CSV file.
+     *
+     * @return True if the player's data was successfully loaded, false otherwise.
+     */
     @Override
     public boolean load() {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -171,5 +146,4 @@ public class RecordPlayer implements Record {
         }
         return false;
     }
-
 }
