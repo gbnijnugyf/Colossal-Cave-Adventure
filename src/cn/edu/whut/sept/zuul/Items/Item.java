@@ -15,6 +15,10 @@ public class Item {
     protected itemType type;
     protected int weight;
 
+    public int getWeight() {
+        return weight;
+    }
+
     public String getName() {
         return name;
     }

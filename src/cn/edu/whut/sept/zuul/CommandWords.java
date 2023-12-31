@@ -23,6 +23,8 @@ public class CommandWords {
         cmdWords.put("go", new CommandGo(gameInfo, this));
         cmdWords.put("look", new CommandLook(gameInfo, this));
         cmdWords.put("item",new CommandItem(gameInfo,this));
+        cmdWords.put("pick",new CommandPick(gameInfo,this));
+        cmdWords.put("drop",new CommandDrop(gameInfo,this));
     }
 
     /**

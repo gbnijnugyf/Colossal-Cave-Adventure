@@ -4,9 +4,6 @@ package cn.edu.whut.sept.zuul.Players;
 import cn.edu.whut.sept.zuul.Items.Item;
 import cn.edu.whut.sept.zuul.Items.Items;
 
-import java.io.*;
-import java.util.HashMap;
-
 public class Player {
     private String name;//玩家姓名
     private int health;//玩家生命值
@@ -24,9 +21,11 @@ public class Player {
         this.roomName = roomName;
         this.items = items;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }
@@ -47,7 +46,7 @@ public class Player {
         this.health = health;
     }
 
-    public void setWeight(int weight) {
+    private void setWeight(int weight) {
         this.weight = weight;
     }
 
@@ -57,6 +56,16 @@ public class Player {
 
     public void setItems(Items items) {
         this.items = items;
+    }
+
+    public void addItem(Item item) {
+        items.addItem(item.getName(), item);
+        setWeight(this.weight - item.getWeight());
+    }
+
+    public void deleteItem(String itemName) {
+        setWeight(this.weight + items.getItemsByName(itemName).getWeight());
+        items.deleteItem(itemName);
     }
 
     public Items getItems() {

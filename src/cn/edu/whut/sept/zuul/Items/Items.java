@@ -43,4 +43,7 @@ public class Items {
     public void addItem(String name, Item item) {
         items.put(name, item);
     }
+    public void deleteItem(String name) {
+        items.remove(name);
+    }
 }
