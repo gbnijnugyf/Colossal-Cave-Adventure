@@ -4,7 +4,6 @@ import cn.edu.whut.sept.zuul.Items.Item;
 import cn.edu.whut.sept.zuul.Items.Items;
 import cn.edu.whut.sept.zuul.Players.Player;
 
-import javax.print.DocFlavor;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +38,6 @@ public class RecordPlayer implements Record {
         this.filePath = filePath;
         this.player.setName(playerName);
         this.allItems = allItems;
-        load();
     }
 
     public Player getPlayer() {
@@ -134,7 +132,7 @@ public class RecordPlayer implements Record {
     }
 
     @Override
-    public void load() {
+    public boolean load() {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -164,12 +162,14 @@ public class RecordPlayer implements Record {
                     System.out.println("Items: " + items);
                     this.player = new Player(name, health, weight, roomName, tempItem);
                     // 找到对应行后，可以退出循环
-                    break;
+                    return true;
                 }
             }
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
 }

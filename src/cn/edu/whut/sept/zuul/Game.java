@@ -111,6 +111,10 @@ public class Game {
 
         //文件路径暂定为”testFile.csv“
         RecordPlayer temp = new RecordPlayer("testFile.csv", playerName, allItems);
+        if(!temp.load()){
+            System.out.println("找不到该玩家信息！");
+            System.exit(0);
+        }
         this.player = temp.getPlayer();
 
         currentRoom = allRoom.get(player.getRoomName());  // start game
@@ -182,5 +186,9 @@ public class Game {
 
     public void setCurrentRoom(Room setCurrentRoom) {
         this.currentRoom = setCurrentRoom;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

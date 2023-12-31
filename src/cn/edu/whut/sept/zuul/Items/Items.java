@@ -37,7 +37,7 @@ public class Items {
      * @return
      */
     public Item getItemsByName(String name) {
-        return items.get("name");
+        return items.get(name);
     }
 
     public void addItem(String name, Item item) {

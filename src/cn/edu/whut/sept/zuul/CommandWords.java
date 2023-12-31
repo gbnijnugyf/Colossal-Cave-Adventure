@@ -22,6 +22,7 @@ public class CommandWords {
         cmdWords.put("help", new CommandHelp(gameInfo, this));
         cmdWords.put("go", new CommandGo(gameInfo, this));
         cmdWords.put("look", new CommandLook(gameInfo, this));
+        cmdWords.put("item",new CommandItem(gameInfo,this));
     }
 
     /**
