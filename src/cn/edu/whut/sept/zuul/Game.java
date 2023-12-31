@@ -17,6 +17,8 @@ import cn.edu.whut.sept.zuul.Items.Item;
 import cn.edu.whut.sept.zuul.Items.ItemAttack;
 import cn.edu.whut.sept.zuul.Items.ItemDefense;
 import cn.edu.whut.sept.zuul.Items.Items;
+import cn.edu.whut.sept.zuul.Monster.Monster;
+import cn.edu.whut.sept.zuul.Monster.Monsters;
 import cn.edu.whut.sept.zuul.Players.Player;
 import cn.edu.whut.sept.zuul.Record.RecordPlayer;
 
@@ -29,6 +31,7 @@ public class Game {
 
     private Room currentRoom;
     private Items allItems;
+    private Monsters allMonsters;
     private HashMap<String, Room> allRoom;
     private Player player;
 
@@ -37,6 +40,7 @@ public class Game {
      */
     public Game() {
         allItems = new Items();
+        allMonsters = new Monsters();
         allRoom = new HashMap<>();
         createRooms();
         parser = new Parser(this);
@@ -54,9 +58,15 @@ public class Game {
 
         ArrayList<Room> rooms = new ArrayList();
         ArrayList<Item> items = new ArrayList();
+        ArrayList<Monster> monsters = new ArrayList();
         Room outside, theater, pub, lab, office;
         Item sword, shield;
+        Monster satan;
 
+        //create monster
+        satan = new Monster("satan", 2, 2);
+        //加入所有怪物集合
+        allMonsters.addMonster(satan);
 
         //create item
         sword = new ItemAttack("sword", 2, 3);
@@ -79,6 +89,7 @@ public class Game {
         allRoom.put("office", office);
 
         //加入数组;
+        monsters.add(satan);
         items.add(sword);
         items.add(shield);
         rooms.add(outside);
@@ -108,10 +119,14 @@ public class Game {
             randNumber = rand.nextInt(rooms.size());
             rooms.get(randNumber).setItem(items.get(i).getName(), items.get(i));
         }
+        for (int i = 0; i < monsters.size(); i++) {
+            randNumber = rand.nextInt(rooms.size());
+            rooms.get(randNumber).setMonster(monsters.get(i));
+        }
 
         //文件路径暂定为”testFile.csv“
         RecordPlayer temp = new RecordPlayer("testFile.csv", playerName, allItems);
-        if(!temp.load()){
+        if (!temp.load()) {
             System.out.println("找不到该玩家信息！");
             System.exit(0);
         }
@@ -131,12 +146,13 @@ public class Game {
 
         boolean finished = false;
         while (!finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
+                Command command = parser.getCommand();
+                finished = processCommand(command);
+
         }
         System.out.println("Thank you for playing.  Good bye.");
 
-        String roomName = getKeyByValue(allRoom,currentRoom);
+        String roomName = getKeyByValue(allRoom, currentRoom);
         this.player.setRoomName(roomName);
         RecordPlayer temp = new RecordPlayer("testFile.csv", player);
         temp.save();

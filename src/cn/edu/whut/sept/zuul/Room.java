@@ -2,6 +2,7 @@ package cn.edu.whut.sept.zuul;
 
 import cn.edu.whut.sept.zuul.Items.Item;
 import cn.edu.whut.sept.zuul.Items.Items;
+import cn.edu.whut.sept.zuul.Monster.Monster;
 
 import java.util.Set;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ public class Room {
     private String description;
     private HashMap<String, Room> exits; //用于存放空间出口
     private Items items;//用于存放空间物品
+    private Monster monster;
 
     /**
      * 初始化Room类，添加描述和空间出口
@@ -48,7 +50,8 @@ public class Room {
     public void getItemsString() {
         items.showAllItems();
     }
-    public Items getItems(){
+
+    public Items getItems() {
         return items;
     }
 
@@ -67,6 +70,10 @@ public class Room {
      * @return 返回结合提示词后的描述字符串
      */
     public String getLongDescription() {
+        if(monster!=null){
+            System.out.println("oh my god, you meet monster!!");
+            System.out.println("fight with it!!!");
+        }
         return "You are " + description + ".\n" + getExitString();
     }
 
@@ -93,6 +100,17 @@ public class Room {
      */
     public Room getExit(String direction) {
         return exits.get(direction);
+    }
+
+    public Monster getMonster() {
+        if(monster!=null){
+            return monster;
+        }
+        return null;
+    }
+
+    public void setMonster(Monster monster) {
+        this.monster = monster;
     }
 }
 
