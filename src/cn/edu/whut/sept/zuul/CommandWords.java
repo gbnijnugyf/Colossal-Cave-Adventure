@@ -1,9 +1,6 @@
 package cn.edu.whut.sept.zuul;
 
-import cn.edu.whut.sept.zuul.CmdWord.CommandGo;
-import cn.edu.whut.sept.zuul.CmdWord.CommandHelp;
-import cn.edu.whut.sept.zuul.CmdWord.CommandQuit;
-import cn.edu.whut.sept.zuul.CmdWord.CommandWord;
+import cn.edu.whut.sept.zuul.CmdWord.*;
 
 import java.util.HashMap;
 
@@ -19,14 +16,17 @@ public class CommandWords {
         createCommands();
         // nothing to do at the moment...
     }
-    private void createCommands(){
-        cmdWords.put("quit",new CommandQuit(gameInfo,this));
-        cmdWords.put("help",new CommandHelp(gameInfo,this));
-        cmdWords.put("go",new CommandGo(gameInfo,this));
+
+    private void createCommands() {
+        cmdWords.put("quit", new CommandQuit(gameInfo, this));
+        cmdWords.put("help", new CommandHelp(gameInfo, this));
+        cmdWords.put("go", new CommandGo(gameInfo, this));
+        cmdWords.put("look", new CommandLook(gameInfo, this));
     }
 
     /**
      * 判断是否是合法命令
+     *
      * @param aString 待处理的输入串
      * @return 如果是合法命令则返回true，否则返回false
      */
@@ -36,6 +36,7 @@ public class CommandWords {
 
     /**
      * 处理传入的命令
+     *
      * @param command 传入命令
      * @return 返回是否退出
      */

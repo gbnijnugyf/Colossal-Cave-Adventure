@@ -31,7 +31,7 @@ public class GameTest {
     }
 
     @Test
-    public void test_go() throws Exception {
+    public void testGo() throws Exception {
         Method processCommand = game.getClass().getDeclaredMethod("processCommand", Command.class);
         processCommand.setAccessible(true);
         Command testCmd = new Command("go", null);
@@ -41,7 +41,7 @@ public class GameTest {
     }
 
     @Test
-    public void test_help() throws Exception {
+    public void testHelp() throws Exception {
         Method processCommand = game.getClass().getDeclaredMethod("processCommand", Command.class);
         processCommand.setAccessible(true);
         Command testCmd = new Command("help", null);
@@ -56,7 +56,7 @@ public class GameTest {
     }
 
     @Test
-    public void test_quit() throws Exception {
+    public void testQuit() throws Exception {
         Method processCommand = game.getClass().getDeclaredMethod("processCommand", Command.class);
         processCommand.setAccessible(true);
         Command testCmd = new Command("quit", null);

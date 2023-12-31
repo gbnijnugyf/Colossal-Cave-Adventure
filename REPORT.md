@@ -281,35 +281,50 @@ classDiagram
 ### 测试
 * 我完成上述修改后，对game中的processCommand方法进行了单元测试，测试用例为三个命令词“go”、“help”和“quit”。go和help预期输出为字符串，quit预期输出直接为退出游戏的true。三个测试用例均成功通过
 
-## 功能扩充点
-    * 样例工程“world-of-zuul”具备最基本的程序功能，该项目具有极大的扩展空间，各位同学可选择或自行设计系统结构优化或功能扩充需求，完成3项左右的功能扩充实现；
+## 功能扩充
+### 1. 为房间增加增加Item
+**Item**：物品的抽象父类，具有名称（`name`）和类型（`type`）属性，以及使用（`use`）和丢弃（`drop`）方法。
 
-   > 可供参考的结构优化或功能扩充项包括但不限于以下内容：
-   >
-   > 1. 扩展游戏，使得一个房间里可以存放任意数量的物件，每个物件可以有一个描述和一个重量值，玩家进入一个房间后，可以通过“look”命令查看当前房间的信息以及房间内的所有物品信息；
-   > 2. 在游戏中实现一个“back”命令，玩家输入该命令后会把玩家带回上一个房间；
-   > 3. 在游戏中实现一个更高级的“back”命令，重复使用它就可以逐层回退几个房间，直到把玩家带回到游戏的起点；
-   > 4. 在游戏中增加具有传输功能的房间，每当玩家进入这个房间，就会被随机地传输到另一个房间；
-   > 5. 在游戏中新建一个独立的Player类用来表示玩家，并实现下列功能需求：
-        >    * 一个玩家对象应该保存玩家的姓名等基本信息，也应该保存玩家当前所在的房间；
-        >
-    * 玩家可以随身携带任意数量的物件，但随身物品的总重量不能操过某个上限值；
-   > * 在游戏中增加两个新的命令“take”和“drop”，使得玩家可以拾取房间内的指定物品或丢弃身上携带的某件或全部物品，当拾取新的物件时超过了玩家可携带的重量上限，系统应给出提示；
-       >
-    * 在游戏中增加一个新的命令“items”, 可以打印出当前房间内所有的物件及总重量，以及玩家随身携带的所有物件及总重量；
-   > * 在某个或某些房间中随机增加一个magic cookie（魔法饼干）物件，并增加一个“eat cookie”命令，如果玩家找到并吃掉魔法饼干，就可以增长玩家的负重能力；
-   > 6. 扩充游戏基本架构，使其支持网络多人游戏模式，具备玩家登陆等功能；
-   > 7. 为单机或网络版游戏增加图形化用户界面，用过可以通过图形化界面执行游戏功能；
-   > 8. 可以为游戏增加数据库功能，用于保存游戏状态和用户设置；
-   > 9. ......
+**ItemAttack**：进攻类型物品类，继承自`Item`，具有力量（`power`）属性和使用（`use`）方法的实现。
 
-5. 编写测试用例
-    * 针对功能改进和扩充，在项目结构中编写单元测试用例，对代码执行单元测试；
+**ItemDefense**：防御类型物品类，继承自`Item`，具有力量（`power`）属性和使用（`use`）方法的实现。
 
-## 任务输出
+**Items**：物品管理类，包含一个存储物品的哈希映射（`items`），具有展示所有物品（`showAllItems`）和添加物品（`addItem`）的方法。
 
-1. 以UML图表示的样例工程软件结构；
-2. 在所有源代码文件中完成源代码标注和扩充，并通过git提交到代码库；；
-3.
+此外，还定义了一个枚举类型`itemType`，表示物品的两种类型：进攻和防御。
 
-每位同学在项目根目录下创建一个名称为REPORT.md的文件（与README.md文件同级），以markdown语法格式编写本实训任务的报告，主要包含样例工程的代码结构分析（可以用UML类图及文字进行说明），以及自己改进的功能实现说明；
+~~~mermaid
+classDiagram
+    class Item {
+        <<abstract>>
+        - String name
+        - itemType type
+        + String getName()
+        + itemType getType()
+        + int use()
+        + void drop()
+    }
+
+    class ItemAttack {
+        - int power
+        + ItemAttack(String name, int power)
+        + int use()
+    }
+
+    class ItemDefense {
+        - int power
+        + ItemDefense(String name, int power)
+        + int use()
+    }
+
+    class Items {
+        - HashMap<String, Item> items
+        + Items(HashMap<String, Item> items)
+        + void showAllItems()
+        + void addItem(String name, Item item)
+    }
+
+    Item <|-- ItemAttack
+    Item <|-- ItemDefense
+    Items o-- Item
+~~~
