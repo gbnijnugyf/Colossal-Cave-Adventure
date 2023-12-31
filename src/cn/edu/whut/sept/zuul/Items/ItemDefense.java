@@ -1,7 +1,6 @@
 package cn.edu.whut.sept.zuul.Items;
 
 public class ItemDefense extends Item {
-    private int power;//力量
 
     public ItemDefense(String name, int power,int weight) {
         this.power = power;

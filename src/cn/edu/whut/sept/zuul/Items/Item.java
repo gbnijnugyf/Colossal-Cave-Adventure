@@ -1,10 +1,5 @@
 package cn.edu.whut.sept.zuul.Items;
 
-enum itemType//物品类型分为进攻和防御两种
-{
-    ATTACK, DEFENSE;
-}
-
 /**
  * Items类为物品父类
  * 有用属性name物品名、type物品类型
@@ -14,6 +9,7 @@ public class Item {
     protected String name;//名称
     protected itemType type;
     protected int weight;
+    protected int power;
 
     public int getWeight() {
         return weight;
@@ -21,6 +17,10 @@ public class Item {
 
     public String getName() {
         return name;
+    }
+
+    public int getPower() {
+        return power;
     }
 
     public itemType getType() {

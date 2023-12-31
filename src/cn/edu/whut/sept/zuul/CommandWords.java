@@ -25,6 +25,7 @@ public class CommandWords {
         cmdWords.put("item",new CommandItem(gameInfo,this));
         cmdWords.put("pick",new CommandPick(gameInfo,this));
         cmdWords.put("drop",new CommandDrop(gameInfo,this));
+        cmdWords.put("fight",new CommandFight(gameInfo,this));
     }
 
     /**

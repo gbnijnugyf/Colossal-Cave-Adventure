@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public class Items {
 
-
     private HashMap<String, Item> items;
 
     public Items() {

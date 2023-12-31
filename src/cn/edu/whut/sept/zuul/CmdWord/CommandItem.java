@@ -20,7 +20,6 @@ public class CommandItem extends CommandWord{
 
     @Override
     public void doCommand(Command command) {
-        super.doCommand(command);
 
         HashMap<String, Item> temp = gameInfo.getPlayer().getItems().getItems();
         if (temp.size() == 0) {

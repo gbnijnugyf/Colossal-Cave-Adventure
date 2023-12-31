@@ -152,10 +152,7 @@ public class Game {
         }
         System.out.println("Thank you for playing.  Good bye.");
 
-        String roomName = getKeyByValue(allRoom, currentRoom);
-        this.player.setRoomName(roomName);
-        RecordPlayer temp = new RecordPlayer("testFile.csv", player);
-        temp.save();
+        gameOver();
     }
 
     /**
@@ -206,5 +203,12 @@ public class Game {
 
     public Player getPlayer() {
         return player;
+    }
+    public void gameOver(){
+        String roomName = getKeyByValue(allRoom, currentRoom);
+        this.player.setRoomName(roomName);
+        RecordPlayer temp = new RecordPlayer("testFile.csv", player);
+        temp.save();
+        System.exit(0);
     }
 }
