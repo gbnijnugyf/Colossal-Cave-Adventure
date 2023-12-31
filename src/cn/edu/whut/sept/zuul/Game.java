@@ -17,20 +17,27 @@ import cn.edu.whut.sept.zuul.Items.Item;
 import cn.edu.whut.sept.zuul.Items.ItemAttack;
 import cn.edu.whut.sept.zuul.Items.ItemDefense;
 import cn.edu.whut.sept.zuul.Items.Items;
+import cn.edu.whut.sept.zuul.Players.Player;
+import cn.edu.whut.sept.zuul.Record.RecordPlayer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
+
+import static cn.edu.whut.sept.zuul.util.FindKeyByValueInHashMap.getKeyByValue;
 
 public class Game {
     private Parser parser;
 
     private Room currentRoom;
+    private Items allItems;
+    private HashMap<String, Room> allRoom;
+    private Player player;
 
     /**
      * 创建游戏并初始化内部数据和解析器.
      */
     public Game() {
+        allItems = new Items();
+        allRoom = new HashMap<>();
         createRooms();
         parser = new Parser(this);
     }
@@ -39,6 +46,12 @@ public class Game {
      * 创建所有房间对象并连接其出口用以构建迷宫.
      */
     private void createRooms() {
+        //读取玩家姓名
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("请输入玩家昵称：");
+        String playerName = scanner.nextLine();
+
+
         ArrayList<Room> rooms = new ArrayList();
         ArrayList<Item> items = new ArrayList();
         Room outside, theater, pub, lab, office;
@@ -46,8 +59,11 @@ public class Game {
 
 
         //create item
-        sword = new ItemAttack("sword", 2);
-        shield = new ItemDefense("shield", 3);
+        sword = new ItemAttack("sword", 2, 3);
+        shield = new ItemDefense("shield", 3, 3);
+        //加入所有物品集合
+        allItems.addItem("sword", sword);
+        allItems.addItem("shield", shield);
 
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -55,6 +71,12 @@ public class Game {
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        //加入所有房间集合
+        allRoom.put("outside", outside);
+        allRoom.put("theater", theater);
+        allRoom.put("pub", pub);
+        allRoom.put("lab", lab);
+        allRoom.put("office", office);
 
         //加入数组;
         items.add(sword);
@@ -87,7 +109,11 @@ public class Game {
             rooms.get(randNumber).setItem(items.get(i).getName(), items.get(i));
         }
 
-        currentRoom = outside;  // start game outside
+        //文件路径暂定为”testFile.csv“
+        RecordPlayer temp = new RecordPlayer("testFile.csv", playerName, allItems);
+        this.player = temp.getPlayer();
+
+        currentRoom = allRoom.get(player.getRoomName());  // start game
     }
 
     /**
@@ -105,6 +131,11 @@ public class Game {
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing.  Good bye.");
+
+        String roomName = getKeyByValue(allRoom,currentRoom);
+        this.player.setRoomName(roomName);
+        RecordPlayer temp = new RecordPlayer("testFile.csv", player);
+        temp.save();
     }
 
     /**

@@ -45,8 +45,11 @@ public class Room {
     /**
      * 获取该空间物品
      */
-    public void getItems() {
+    public void getItemsString() {
         items.showAllItems();
+    }
+    public Items getItems(){
+        return items;
     }
 
     /**

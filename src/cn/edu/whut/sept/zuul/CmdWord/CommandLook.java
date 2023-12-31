@@ -18,6 +18,6 @@ public class CommandLook extends CommandWord{
     @Override
     public void doCommand(Command command) {
         super.doCommand(command);
-        gameInfo.getCurrentRoom().getItems();
+        gameInfo.getCurrentRoom().getItemsString();
     }
 }

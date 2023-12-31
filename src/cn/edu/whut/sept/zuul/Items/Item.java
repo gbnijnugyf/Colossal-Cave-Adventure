@@ -13,6 +13,7 @@ enum itemType//物品类型分为进攻和防御两种
 public class Item {
     protected String name;//名称
     protected itemType type;
+    protected int weight;
 
     public String getName() {
         return name;

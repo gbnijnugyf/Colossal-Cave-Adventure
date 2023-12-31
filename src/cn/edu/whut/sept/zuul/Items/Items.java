@@ -4,7 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Items {
+
+
     private HashMap<String, Item> items;
+
+    public Items() {
+        items = new HashMap<>();
+    }
 
     public Items(HashMap<String, Item> items) {
         this.items = items;
@@ -20,6 +26,18 @@ public class Items {
             System.out.print(command + "  ");
         }
         System.out.println();
+    }
+
+    public HashMap<String, Item> getItems() {
+        return items;
+    }
+
+    /**
+     * @param name
+     * @return
+     */
+    public Item getItemsByName(String name) {
+        return items.get("name");
     }
 
     public void addItem(String name, Item item) {
