@@ -281,8 +281,10 @@ classDiagram
 ### 测试
 * 我完成上述修改后，对game中的processCommand方法进行了单元测试，测试用例为三个命令词“go”、“help”和“quit”。go和help预期输出为字符串，quit预期输出直接为退出游戏的true。三个测试用例均成功通过
 
+---
+
 ## 功能扩充
-### 1. 为房间增加增加Item
+### 1. 为房间增加Item
 **Item**：物品的抽象父类，具有名称（`name`）和类型（`type`）属性，以及使用（`use`）和丢弃（`drop`）方法。
 
 **ItemAttack**：进攻类型物品类，继承自`Item`，具有力量（`power`）属性和使用（`use`）方法的实现。
@@ -328,3 +330,231 @@ classDiagram
     Item <|-- ItemDefense
     Items o-- Item
 ~~~
+
+---
+
+### 1. 为房间增加Monster
+
+#### Monsters 类是一个管理怪物的类，而 Monster 类表示一个怪物对象。
+
+Monsters 类中包含了一个 HashMap 类型的成员变量 allMonster，用于存储所有的怪物对象。它提供了以下方法：
+
+- `Monsters(HashMap<String, Monster> allMonster)`：构造方法，用于初始化 Monsters 对象，并接收一个包含怪物的 HashMap。
+- `Monsters()`：无参构造方法，用于初始化 Monsters 对象，并创建一个空的 HashMap。
+- `addMonster(Monster monster)`：将怪物对象添加到 allMonster 中，使用怪物的名称作为键。
+- `deleteMonster(String monsterName)`：从 allMonster 中删除指定名称的怪物。
+
+Monster 类表示一个怪物对象，它具有名称（name），生命值（health）和攻击力（power）。它提供了以下方法：
+
+- `Monster(String name, int health, int power)`：构造方法，用于初始化 Monster 对象，并接收怪物的名称、生命值和攻击力。
+- `getName()` 和 `setName(String name)`：用于获取和设置怪物的名称。
+- `getHealth()` 和 `setHealth(int health)`：用于获取和设置怪物的生命值。
+- `getPower()` 和 `setPower(int power)`：用于获取和设置怪物的攻击力。
+
+这些类可以用于创建怪物对象并进行管理。可以使用 Monsters 类的实例来添加、删除和检索怪物对象，以及使用 Monster 类的实例来获取和设置怪物的属性。
+~~~mermaid
+classDiagram
+    class Monsters {
+        - allMonster: HashMap<String, Monster>
+        + Monsters()
+        + Monsters(allMonster: HashMap<String, Monster>)
+        + addMonster(monster: Monster): void
+        + deleteMonster(monsterName: String): void
+    }
+    
+    class Monster {
+        - name: String
+        - health: int
+        - power: int
+        + Monster(name: String, health: int, power: int)
+        + getName(): String
+        + setName(name: String): void
+        + getHealth(): int
+        + setHealth(health: int): void
+        + getPower(): int
+        + setPower(power: int): void
+    }
+
+    Monsters --> Monster: aggregation
+~~~
+
+---
+
+### 为游戏增加player类，增加玩家信息
+#### Player 类
+
+- `name`：玩家姓名
+- `health`：玩家生命值
+- `weight`：玩家可负重
+- `roomName`：玩家当前所在房间
+- `items`：玩家当前持有的物品
+
+#### 构造方法
+
+- `Player()`：无参构造方法，创建一个空的 Player 对象。
+- `Player(name: String)`：构造方法，根据提供的姓名初始化一个 Player 对象，并设置默认的生命值、负重、当前房间和物品。
+- `Player(name: String, health: int, weight: int, roomName: String, items: Items)`：构造方法，根据提供的参数初始化一个 Player 对象。
+
+#### 方法
+
+- `setName(name: String)`：设置玩家姓名。
+- `getName(): String`：获取玩家姓名。
+- `getHealth(): int`：获取玩家生命值。
+- `getWeight(): int`：获取玩家可负重。
+- `getRoomName(): String`：获取玩家当前所在房间的名称。
+- `setHealth(health: int)`：设置玩家生命值。
+- `setRoomName(roomName: String)`：设置玩家当前所在房间的名称。
+- `setItems(items: Items)`：设置玩家持有的物品。
+- `addItem(item: Item)`：将物品添加到玩家的物品列表中，并更新玩家的负重限制。
+- `deleteItem(itemName: String)`：从玩家的物品列表中删除指定名称的物品，并更新玩家的负重限制。
+- `getItems(): Items`：获取玩家持有的物品列表。
+
+
+~~~mermaid
+classDiagram
+    class Player {
+        - name: String
+        - health: int
+        - weight: int
+        - roomName: String
+        - items: Items
+        + Player()
+        + Player(name: String)
+        + Player(name: String, health: int, weight: int, roomName: String, items: Items)
+        + setName(name: String): void
+        + getName(): String
+        + getHealth(): int
+        + getWeight(): int
+        + getRoomName(): String
+        + setHealth(health: int): void
+        + setRoomName(roomName: String): void
+        + setItems(items: Items): void
+        + addItem(item: Item): void
+        + deleteItem(itemName: String): void
+        + getItems(): Items
+    }
+
+    class Items {
+
+    }
+
+    class Item {
+        
+    }
+
+    Player --> Items: composition
+    Player "1" --> "*" Item: composition
+~~~
+
+### 增加Record接口和RecordPlayer实现
+#### RecordPlayer 类
+
+- `filePath`：文件路径
+- `player`：玩家对象
+- `allItems`：所有物品信息
+
+##### 构造方法
+
+- `RecordPlayer(filePath: String, player: Player)`：根据提供的文件路径和玩家对象初始化一个 RecordPlayer 对象。
+- `RecordPlayer(filePath: String, playerName: String, allItems: Items)`：根据提供的文件路径、玩家姓名和所有物品信息初始化一个 RecordPlayer 对象。
+
+##### 方法
+
+- `checkIsInRecord(): boolean`：检查记录中是否包含当前玩家信息，如果有则返回 true。
+- `getPlayer(): Player`：获取玩家对象。
+- `save(): void`：将玩家数据保存到 CSV 文件中。
+- `load(): boolean`：从 CSV 文件中加载玩家数据，如果成功加载则返回 true，否则返回 false。
+~~~mermaid
+classDiagram
+    class Record {
+    <<interface>>
+        + save(): void
+        + load(): boolean
+    }
+
+    class Player {
+        - name: String
+        - health: int
+        - weight: int
+        - roomName: String
+        - items: Items
+        + Player()
+        + Player(name: String)
+        + Player(name: String, health: int, weight: int, roomName: String, items: Items)
+        + setName(name: String): void
+        + getName(): String
+        + getHealth(): int
+        + getWeight(): int
+        + getRoomName(): String
+        + setHealth(health: int): void
+        + setRoomName(roomName: String): void
+        + setItems(items: Items): void
+        + addItem(item: Item): void
+        + deleteItem(itemName: String): void
+        + getItems(): Items
+    }
+
+    class RecordPlayer {
+        - filePath: String
+        - player: Player
+        - allItems: Items
+        + RecordPlayer(filePath: String, player: Player)
+        + RecordPlayer(filePath: String, playerName: String, allItems: Items)
+        + checkIsInRecord(): boolean
+        + getPlayer(): Player
+        + save(): void
+        + load(): boolean
+    }
+
+    class Items {
+    }
+
+    class Item {
+    }
+
+    Record <|.. RecordPlayer
+    RecordPlayer --> Player
+    RecordPlayer --> Items
+    Player --> Items: composition
+    Player "1" --> "*" Item: composition
+~~~
+---
+### 增加命令item玩家查看自己的物品
+#### CommandItem 类
+
+- `doCommand(command: Command): void`：执行物品命令。该方法会获取玩家的物品列表，并打印出所有物品的名称。
+
+---
+
+### 增加命令look玩家查看当前房间物品
+
+#### CommandLook 类
+
+- `doCommand(command: Command): void`：执行查看命令。该方法会输出当前房间的物品信息。
+
+---
+
+
+### 增加命令pick玩家捡起物品
+
+#### CommandPick 类
+
+- `doCommand(command: Command): void`：执行拾取命令。该方法会检查命令是否有第二个单词，如果没有则提示用户需要指定拾取的物品名称。如果有指定物品名称，则尝试从当前房间获取该物品，并根据一定条件进行拾取操作。
+
+---
+
+### 增加命令drop玩家丢弃自己的物品
+
+#### CommandDrop 类
+
+- `doCommand(command: Command): void`：执行丢弃命令。该方法会检查命令是否有第二个单词，如果没有则提示用户需要指定丢弃的物品名称。如果有指定物品名称，则尝试从玩家的物品列表中获取该物品，并将其丢弃到当前房间。
+
+---
+
+
+### 增加命令fight玩家与怪物进行战斗
+#### CommandFight 类
+
+- `doCommand(command: Command): void`：执行战斗命令。该方法会获取当前房间的怪物、玩家和玩家的武器信息，并进行战斗计算。首先输出玩家和怪物的血量和攻击力信息，然后根据玩家的防御武器减少受到的伤害，更新玩家血量。接着根据玩家的攻击武器攻击怪物，减少怪物的血量。最后根据战斗结果输出相应信息。
+
+---
