@@ -59,6 +59,9 @@ public class Game {
         System.out.println("3.退出");
         System.out.print("请选择（编号）：");
         String choice = scanner.nextLine();
+        if(choice!="1"||choice!="2"){
+            System.exit(0);
+        }
         String playerName = "";
         //读取玩家姓名
         System.out.print("请输入玩家昵称：");
@@ -87,8 +90,6 @@ public class Game {
                 System.exit(0);
                 break;
         }
-
-
     }
 
     /**
