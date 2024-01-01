@@ -39,6 +39,11 @@ public class RecordPlayer implements Record {
         this.player.setName(playerName);
         this.allItems = allItems;
     }
+
+    public boolean checkIsInRecord() {
+        return load();
+    }
+
     /**
      * Returns the player object.
      *
@@ -47,6 +52,7 @@ public class RecordPlayer implements Record {
     public Player getPlayer() {
         return player;
     }
+
     /**
      * Saves the player's data to a CSV file.
      */
@@ -62,6 +68,7 @@ public class RecordPlayer implements Record {
                 }
             }
             HashMap<String, String> newItems = new HashMap<>(); // 替换为新的玩家持有物品
+            boolean playerFound = false;
             // 在列表中查找对应玩家姓名的行并更新数据
             for (int i = 0; i < lines.size(); i++) {
                 String line = lines.get(i);
@@ -82,12 +89,26 @@ public class RecordPlayer implements Record {
                     }
                     // 更新行数据
                     lines.set(i, String.valueOf(dataLine));
-
+                    playerFound = true;
                     // 找到对应行后，可以退出循环
                     break;
                 }
             }
+            // 如果没有找到对应行，则添加新的行
+            if (!playerFound) {
+                StringBuilder dataLine = new StringBuilder();
+                dataLine.append(player.getName()).append(",").append(player.getHealth()).append(",").append(player.getWeight()).append(",").append(player.getRoomName()).append(",");
 
+                if (!player.getItems().getItems().isEmpty()) {
+                    StringBuilder itemsData = new StringBuilder();
+                    for (Item item : player.getItems().getItems().values()) {
+                        itemsData.append(item.getName()).append(",");
+                    }
+                    dataLine.append(itemsData.deleteCharAt(itemsData.length() - 1));
+                }
+                // 添加新的行数据
+                lines.add(String.valueOf(dataLine));
+            }
             // 将更新后的内容写回CSV文件
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
                 for (String line : lines) {
@@ -96,11 +117,13 @@ public class RecordPlayer implements Record {
                 }
             }
 
+
             System.out.println("玩家数据已成功更新。");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     /**
      * Loads the player's data from a CSV file.
      *

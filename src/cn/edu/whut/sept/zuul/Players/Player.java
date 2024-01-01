@@ -17,6 +17,13 @@ public class Player {
      */
     public Player() {
     }
+    public Player(String name) {
+        this.name = name;
+        this.health = 10;
+        this.weight = 5;
+        this.roomName = "outside";
+        this.items = new Items();
+    }
     /**
      * Constructs a new Player object with the specified parameters.
      *

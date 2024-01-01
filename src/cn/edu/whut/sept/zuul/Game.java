@@ -42,19 +42,57 @@ public class Game {
         allItems = new Items();
         allMonsters = new Monsters();
         allRoom = new HashMap<>();
+
         createRooms();
+
         parser = new Parser(this);
+    }
+
+
+    private void loadPlayer() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("1.载入历史记录");
+        System.out.println("2.新建游戏");
+        System.out.println("3.退出");
+        System.out.print("请选择（编号）：");
+        String choice = scanner.nextLine();
+        String playerName = "";
+        //读取玩家姓名
+        System.out.print("请输入玩家昵称：");
+        playerName = scanner.nextLine();
+        //文件路径暂定为”testFile.csv“
+        RecordPlayer temp = new RecordPlayer("testFile.csv", playerName, allItems);
+
+        switch (choice) {
+            case "1":
+                if (!temp.load()) {
+                    System.out.println("找不到该玩家信息！");
+                    System.exit(0);
+                }
+                this.player = temp.getPlayer();
+                break;
+            case "2":
+                if (temp.checkIsInRecord()) {
+                    System.out.println("含有相同昵称玩家信息！");
+                    System.exit(0);
+                } else {
+                    this.player = new Player(playerName);
+                }
+
+                break;
+            default:
+                System.exit(0);
+                break;
+        }
+
+
     }
 
     /**
      * 创建所有房间对象并连接其出口用以构建迷宫.
      */
     private void createRooms() {
-        //读取玩家姓名
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("请输入玩家昵称：");
-        String playerName = scanner.nextLine();
-
 
         ArrayList<Room> rooms = new ArrayList();
         ArrayList<Item> items = new ArrayList();
@@ -124,14 +162,7 @@ public class Game {
             rooms.get(randNumber).setMonster(monsters.get(i));
         }
 
-        //文件路径暂定为”testFile.csv“
-        RecordPlayer temp = new RecordPlayer("testFile.csv", playerName, allItems);
-        if (!temp.load()) {
-            System.out.println("找不到该玩家信息！");
-            System.exit(0);
-        }
-        this.player = temp.getPlayer();
-
+        loadPlayer();
         currentRoom = allRoom.get(player.getRoomName());  // start game
     }
 
@@ -146,8 +177,8 @@ public class Game {
 
         boolean finished = false;
         while (!finished) {
-                Command command = parser.getCommand();
-                finished = processCommand(command);
+            Command command = parser.getCommand();
+            finished = processCommand(command);
 
         }
         System.out.println("Thank you for playing.  Good bye.");
@@ -196,6 +227,7 @@ public class Game {
     public Room getCurrentRoom() {
         return currentRoom;
     }
+
     /**
      * Sets the current room for the player.
      *
@@ -204,6 +236,7 @@ public class Game {
     public void setCurrentRoom(Room setCurrentRoom) {
         this.currentRoom = setCurrentRoom;
     }
+
     /**
      * Returns the player object.
      *
@@ -212,11 +245,12 @@ public class Game {
     public Player getPlayer() {
         return player;
     }
+
     /**
      * Ends the game and performs necessary actions.
      * Saves the player's current room and exits the game.
      */
-    public void gameOver(){
+    public void gameOver() {
         String roomName = getKeyByValue(allRoom, currentRoom);
         this.player.setRoomName(roomName);
         RecordPlayer temp = new RecordPlayer("testFile.csv", player);
