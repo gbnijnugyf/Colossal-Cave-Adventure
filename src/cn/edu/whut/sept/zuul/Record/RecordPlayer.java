@@ -40,6 +40,10 @@ public class RecordPlayer implements Record {
         this.allItems = allItems;
     }
 
+    /**
+     * 查找记录中是否含有当前玩家信息
+     * @return 有返回true
+     */
     public boolean checkIsInRecord() {
         return load();
     }

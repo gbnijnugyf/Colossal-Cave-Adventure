@@ -17,6 +17,11 @@ public class Player {
      */
     public Player() {
     }
+
+    /**
+     * 初始化player
+     * @param name 初始化一个名为name的player
+     */
     public Player(String name) {
         this.name = name;
         this.health = 10;

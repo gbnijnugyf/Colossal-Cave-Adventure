@@ -48,7 +48,9 @@ public class Game {
         parser = new Parser(this);
     }
 
-
+    /**
+     * 加载玩家信息
+     */
     private void loadPlayer() {
         Scanner scanner = new Scanner(System.in);
 
