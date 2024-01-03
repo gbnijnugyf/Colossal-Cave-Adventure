@@ -123,9 +123,14 @@ public class Player {
      *
      * @param item The item to add.
      */
-    public void addItem(Item item) {
+    public boolean addItem(Item item) {
         items.addItem(item.getName(), item);
-        setWeight(this.weight - item.getWeight());
+        int tempWeight =this.weight - item.getWeight();
+        if(tempWeight>0){
+            setWeight(tempWeight);
+            return true;
+        }
+        return false;
     }
     /**
      * Deletes an item from the player's inventory.

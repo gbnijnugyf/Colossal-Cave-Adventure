@@ -5,7 +5,7 @@ import cn.edu.whut.sept.zuul.CommandWords;
 import cn.edu.whut.sept.zuul.Game;
 import cn.edu.whut.sept.zuul.Items.Item;
 
-public class CommandPick extends CommandWord{
+public class CommandPick extends CommandWord {
     /**
      * 构造函数传入执行命令需要获取的信息
      *
@@ -15,6 +15,7 @@ public class CommandPick extends CommandWord{
     public CommandPick(Game gameInfo, CommandWords allCmd) {
         super(gameInfo, allCmd);
     }
+
     /**
      * Executes the pick command.
      *
@@ -22,7 +23,7 @@ public class CommandPick extends CommandWord{
      */
     @Override
     public void doCommand(Command command) {
-        if(!command.hasSecondWord()) {
+        if (!command.hasSecondWord()) {
             // if there is no second word, we don't know what to pick...
             System.out.println("Pick what?");
             return;
@@ -35,12 +36,17 @@ public class CommandPick extends CommandWord{
 
         if (pickItem == null) {
             System.out.println("There is no item!");
-        } else if (gameInfo.getPlayer().getWeight()< pickItem.getWeight()) {
-            System.out.println("you can't carry too much!");
-        } else {
-            gameInfo.getPlayer().addItem(pickItem);
-            gameInfo.getCurrentRoom().deleteItem(pickItem.getName());
-            System.out.println("pick up "+pickItem.getName()+" successfully");
+        }
+//        else if (gameInfo.getPlayer().getWeight()< pickItem.getWeight()) {
+//            System.out.println("you can't carry too much!");
+//        }
+        else {
+            if (gameInfo.getPlayer().addItem(pickItem)) {
+                gameInfo.getCurrentRoom().deleteItem(pickItem.getName());
+                System.out.println("pick up " + pickItem.getName() + " successfully");
+            } else {
+                System.out.println("you can't carry too much!");
+            }
         }
     }
 }

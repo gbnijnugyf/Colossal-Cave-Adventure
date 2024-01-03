@@ -59,7 +59,7 @@ public class Game {
         System.out.println("3.退出");
         System.out.print("请选择（编号）：");
         String choice = scanner.nextLine();
-        if(choice!="1"||choice!="2"){
+        if(!choice.equals("1")&&!choice.equals("2")){
             System.exit(0);
         }
         String playerName = "";

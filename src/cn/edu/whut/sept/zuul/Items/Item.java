@@ -11,6 +11,13 @@ public class Item {
     protected int weight;
     protected int power;
 
+    public Item(String name, itemType type, int power, int weight) {
+        this.name = name;
+        this.power = power;
+        this.weight = weight;
+        this.type = type;
+    }
+
     public int getWeight() {
         return weight;
     }
