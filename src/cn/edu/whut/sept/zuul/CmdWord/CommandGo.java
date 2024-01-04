@@ -15,7 +15,7 @@ public class CommandGo extends CommandWord {
      * 执行go指令，向房间的指定方向出口移动，如果该出口连接了另一个房间，则会进入该房间，
      * 否则打印输出错误提示信息.
      *
-     * @param command
+     * @param command 被执行的命令（处理过）
      */
     @Override
     public void doCommand(Command command) {

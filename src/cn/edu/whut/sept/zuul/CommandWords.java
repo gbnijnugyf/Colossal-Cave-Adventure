@@ -10,6 +10,7 @@ public class CommandWords {
 
     /**
      * 初始化
+     * @param gameInfo 游戏信息
      */
     public CommandWords(Game gameInfo) {
         this.gameInfo = gameInfo;

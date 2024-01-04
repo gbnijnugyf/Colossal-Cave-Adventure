@@ -10,7 +10,7 @@ public class CommandQuit extends CommandWord{
 
     /**
      * 重写isQuit方法，该命令返回true，确认退出
-     * @return
+     * @return 返回true
      */
     @Override
     public boolean isQuit() {

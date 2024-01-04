@@ -8,6 +8,7 @@ public class Parser {
 
     /**
      * 初始化Parser类，创建commands命令对象、reader扫描输入对象和游戏信息
+     * @param gameInfo 游戏信息
      */
     public Parser(Game gameInfo) {
         commands = new CommandWords(gameInfo);

@@ -16,7 +16,7 @@ public class Room {
     /**
      * 初始化Room类，添加描述和空间出口
      *
-     * @param description
+     * @param description 房间描述
      */
     public Room(String description) {
         this.description = description;

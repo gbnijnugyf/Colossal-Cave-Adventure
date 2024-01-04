@@ -7,8 +7,8 @@ public class Command
 
     /**
      * 读入命令，将输入的命令分别分为commandWord和secondWord
-     * @param firstWord
-     * @param secondWord
+     * @param firstWord 第一个命令
+     * @param secondWord 第二个命令词
      */
     public Command(String firstWord, String secondWord)
     {

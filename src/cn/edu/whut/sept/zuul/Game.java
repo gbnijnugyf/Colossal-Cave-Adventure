@@ -225,7 +225,7 @@ public class Game {
     /**
      * 由于执行go命令需要对当前房间进行读写操作，于是设置访问器
      *
-     * @return
+     * @return 返回当前房间信息
      */
     public Room getCurrentRoom() {
         return currentRoom;

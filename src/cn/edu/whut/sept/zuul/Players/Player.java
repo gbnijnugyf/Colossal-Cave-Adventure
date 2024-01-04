@@ -122,6 +122,7 @@ public class Player {
      * Adds an item to the player's inventory.
      *
      * @param item The item to add.
+     * @return 成功添加返回true，否则返回false
      */
     public boolean addItem(Item item) {
         items.addItem(item.getName(), item);
