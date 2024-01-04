@@ -4,13 +4,13 @@ import cn.edu.whut.sept.zuul.Items.Item;
 import cn.edu.whut.sept.zuul.Items.Items;
 import cn.edu.whut.sept.zuul.Monster.Monster;
 
-import java.util.Set;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Room {
-    private String description;
-    private HashMap<String, Room> exits; //用于存放空间出口
-    private Items items;//用于存放空间物品
+    private final String description;
+    private final HashMap<String, Room> exits; //用于存放空间出口
+    private final Items items;//用于存放空间物品
     private Monster monster;
 
     /**
@@ -70,7 +70,7 @@ public class Room {
      * @return 返回结合提示词后的描述字符串
      */
     public String getLongDescription() {
-        if(monster!=null){
+        if (monster != null) {
             System.out.println("oh my god, you meet monster!!");
             System.out.println("fight with it or run!!!");
         }
@@ -103,7 +103,7 @@ public class Room {
     }
 
     public Monster getMonster() {
-        if(monster!=null){
+        if (monster != null) {
             return monster;
         }
         return null;
@@ -112,10 +112,12 @@ public class Room {
     public void setMonster(Monster monster) {
         this.monster = monster;
     }
-    public void addItem(Item item){
-        items.addItem(item.getName(),item);
+
+    public void addItem(Item item) {
+        items.addItem(item.getName(), item);
     }
-    public void deleteItem(String itemName){
+
+    public void deleteItem(String itemName) {
         items.deleteItem(itemName);
     }
 }

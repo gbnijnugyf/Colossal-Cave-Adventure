@@ -1,19 +1,21 @@
 package cn.edu.whut.sept.zuul.Items;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+
 /**
  * The Items class represents a collection of items.
  */
 public class Items {
 
-    private HashMap<String, Item> items;
+    private final HashMap<String, Item> items;
+
     /**
      * Constructs an empty Items object.
      */
     public Items() {
         items = new HashMap<>();
     }
+
     /**
      * Constructs an Items object with the specified items.
      *
@@ -22,6 +24,7 @@ public class Items {
     public Items(HashMap<String, Item> items) {
         this.items = items;
     }
+
     /**
      * Displays all the items in the collection.
      * If there are no items, it prints a message indicating that the place has no items.
@@ -66,6 +69,7 @@ public class Items {
     public void addItem(String name, Item item) {
         items.put(name, item);
     }
+
     /**
      * Deletes an item from the collection.
      *

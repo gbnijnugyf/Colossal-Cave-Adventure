@@ -3,11 +3,12 @@ package cn.edu.whut.sept.zuul;
 import java.util.Scanner;
 
 public class Parser {
-    private CommandWords commands;
-    private Scanner reader;
+    private final CommandWords commands;
+    private final Scanner reader;
 
     /**
      * 初始化Parser类，创建commands命令对象、reader扫描输入对象和游戏信息
+     *
      * @param gameInfo 游戏信息
      */
     public Parser(Game gameInfo) {
@@ -46,6 +47,7 @@ public class Parser {
 
     /**
      * 传入命令，并交给commands类处理命令
+     *
      * @param command 传入命令
      * @return 返回处理函数返回的布尔值，表示是否退出
      */

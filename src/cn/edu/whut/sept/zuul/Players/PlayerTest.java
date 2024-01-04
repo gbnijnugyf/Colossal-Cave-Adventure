@@ -18,8 +18,8 @@ public class PlayerTest {
     public void setUp() {
 //      public Player(String name, int health, int weight, String roomName, Items items) {
         player = new Player("John");
-        item1 = new ItemAttack("Sword", 3,3);
-        item2 = new ItemDefense("Shield", 2,3);
+        item1 = new ItemAttack("Sword", 3, 3);
+        item2 = new ItemDefense("Shield", 2, 3);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class PlayerTest {
     public void testAddItem() {
         player.addItem(item1);
         Items items = player.getItems();
-        assertTrue(items.getItemsByName("Sword")!=null);
+        assertTrue(items.getItemsByName("Sword") != null);
         assertEquals(2, player.getWeight());
     }
 
@@ -74,7 +74,7 @@ public class PlayerTest {
 //        player.addItem(item2);
         player.deleteItem("Sword");
         Items items = player.getItems();
-        assertFalse(items.getItemsByName("Sword")!=null);
+        assertFalse(items.getItemsByName("Sword") != null);
         assertEquals(5, player.getWeight());
     }
 }

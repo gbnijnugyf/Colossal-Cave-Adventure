@@ -5,11 +5,12 @@ import cn.edu.whut.sept.zuul.CmdWord.*;
 import java.util.HashMap;
 
 public class CommandWords {
-    private Game gameInfo;
-    private HashMap<String, CommandWord> cmdWords = new HashMap<String, CommandWord>();
+    private final Game gameInfo;
+    private final HashMap<String, CommandWord> cmdWords = new HashMap<String, CommandWord>();
 
     /**
      * 初始化
+     *
      * @param gameInfo 游戏信息
      */
     public CommandWords(Game gameInfo) {
@@ -23,10 +24,10 @@ public class CommandWords {
         cmdWords.put("help", new CommandHelp(gameInfo, this));
         cmdWords.put("go", new CommandGo(gameInfo, this));
         cmdWords.put("look", new CommandLook(gameInfo, this));
-        cmdWords.put("item",new CommandItem(gameInfo,this));
-        cmdWords.put("pick",new CommandPick(gameInfo,this));
-        cmdWords.put("drop",new CommandDrop(gameInfo,this));
-        cmdWords.put("fight",new CommandFight(gameInfo,this));
+        cmdWords.put("item", new CommandItem(gameInfo, this));
+        cmdWords.put("pick", new CommandPick(gameInfo, this));
+        cmdWords.put("drop", new CommandDrop(gameInfo, this));
+        cmdWords.put("fight", new CommandFight(gameInfo, this));
     }
 
     /**

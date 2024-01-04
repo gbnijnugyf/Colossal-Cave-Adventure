@@ -16,6 +16,7 @@ public class CommandDrop extends CommandWord {
     public CommandDrop(Game gameInfo, CommandWords allCmd) {
         super(gameInfo, allCmd);
     }
+
     /**
      * Executes the drop command.
      *

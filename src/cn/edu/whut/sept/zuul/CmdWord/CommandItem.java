@@ -7,7 +7,7 @@ import cn.edu.whut.sept.zuul.Items.Item;
 
 import java.util.HashMap;
 
-public class CommandItem extends CommandWord{
+public class CommandItem extends CommandWord {
     /**
      * 构造函数传入执行命令需要获取的信息
      *
@@ -17,6 +17,7 @@ public class CommandItem extends CommandWord{
     public CommandItem(Game gameInfo, CommandWords allCmd) {
         super(gameInfo, allCmd);
     }
+
     /**
      * Executes the inventory command.
      *

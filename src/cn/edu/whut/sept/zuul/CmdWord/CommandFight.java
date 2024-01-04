@@ -10,6 +10,7 @@ import cn.edu.whut.sept.zuul.Players.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 /**
  * This class represents a battle command in the game.
  */
@@ -23,6 +24,7 @@ public class CommandFight extends CommandWord {
     public CommandFight(Game gameInfo, CommandWords allCmd) {
         super(gameInfo, allCmd);
     }
+
     /**
      * Executes the battle command.
      *

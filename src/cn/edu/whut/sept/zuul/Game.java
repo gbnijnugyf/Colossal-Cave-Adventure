@@ -22,17 +22,20 @@ import cn.edu.whut.sept.zuul.Monster.Monsters;
 import cn.edu.whut.sept.zuul.Players.Player;
 import cn.edu.whut.sept.zuul.Record.RecordPlayer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.Scanner;
 
 import static cn.edu.whut.sept.zuul.util.FindKeyByValueInHashMap.getKeyByValue;
 
 public class Game {
-    private Parser parser;
+    private final Parser parser;
 
     private Room currentRoom;
-    private Items allItems;
-    private Monsters allMonsters;
-    private HashMap<String, Room> allRoom;
+    private final Items allItems;
+    private final Monsters allMonsters;
+    private final HashMap<String, Room> allRoom;
     private Player player;
 
     /**
@@ -59,7 +62,7 @@ public class Game {
         System.out.println("3.退出");
         System.out.print("请选择（编号）：");
         String choice = scanner.nextLine();
-        if(!choice.equals("1")&&!choice.equals("2")){
+        if (!choice.equals("1") && !choice.equals("2")) {
             System.exit(0);
         }
         String playerName = "";

@@ -4,7 +4,7 @@ import cn.edu.whut.sept.zuul.Command;
 import cn.edu.whut.sept.zuul.CommandWords;
 import cn.edu.whut.sept.zuul.Game;
 
-public class CommandLook extends CommandWord{
+public class CommandLook extends CommandWord {
     /**
      * 构造函数传入执行命令需要获取的信息
      *
@@ -14,6 +14,7 @@ public class CommandLook extends CommandWord{
     public CommandLook(Game gameInfo, CommandWords allCmd) {
         super(gameInfo, allCmd);
     }
+
     /**
      * Executes the doCommand method.
      *

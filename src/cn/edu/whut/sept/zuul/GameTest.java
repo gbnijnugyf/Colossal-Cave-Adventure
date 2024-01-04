@@ -35,7 +35,7 @@ public class GameTest {
         Method processCommand = game.getClass().getDeclaredMethod("processCommand", Command.class);
         processCommand.setAccessible(true);
         Command testCmd = new Command("go", null);
-        processCommand.invoke(game, new Object[]{testCmd});
+        processCommand.invoke(game, testCmd);
         String expected = "Go where?";
         assertEquals(expected, bytes.toString().trim());
     }
@@ -45,7 +45,7 @@ public class GameTest {
         Method processCommand = game.getClass().getDeclaredMethod("processCommand", Command.class);
         processCommand.setAccessible(true);
         Command testCmd = new Command("help", null);
-        processCommand.invoke(game, new Object[]{testCmd});
+        processCommand.invoke(game, testCmd);
         //此处\r\n是为了符合windows系统控制台输出的换行符
         String expected = "You are lost. You are alone. You wander\r\n" +
                 "around at the university.\r\n" +
@@ -60,7 +60,7 @@ public class GameTest {
         Method processCommand = game.getClass().getDeclaredMethod("processCommand", Command.class);
         processCommand.setAccessible(true);
         Command testCmd = new Command("quit", null);
-        Object result = processCommand.invoke(game, new Object[]{testCmd});
+        Object result = processCommand.invoke(game, testCmd);
         boolean expected = true;
         assertEquals(expected, result);
     }

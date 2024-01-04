@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RecordPlayer implements Record {
-    private String filePath;
+    private final String filePath;
     private Player player;
     private Items allItems;
 
@@ -42,6 +42,7 @@ public class RecordPlayer implements Record {
 
     /**
      * 查找记录中是否含有当前玩家信息
+     *
      * @return 有返回true
      */
     public boolean checkIsInRecord() {

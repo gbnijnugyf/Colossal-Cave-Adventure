@@ -3,6 +3,7 @@ package cn.edu.whut.sept.zuul.Players;
 
 import cn.edu.whut.sept.zuul.Items.Item;
 import cn.edu.whut.sept.zuul.Items.Items;
+
 /**
  * The Player class represents a player in the game.
  */
@@ -12,6 +13,7 @@ public class Player {
     private int weight;//玩家可负重
     private String roomName;//玩家当前所在房间
     private Items items;//玩家当前持有的物品
+
     /**
      * Constructs a new Player object.
      */
@@ -20,6 +22,7 @@ public class Player {
 
     /**
      * 初始化player
+     *
      * @param name 初始化一个名为name的player
      */
     public Player(String name) {
@@ -29,6 +32,7 @@ public class Player {
         this.roomName = "outside";
         this.items = new Items();
     }
+
     /**
      * Constructs a new Player object with the specified parameters.
      *
@@ -47,14 +51,6 @@ public class Player {
     }
 
     /**
-     * Sets the name of the player.
-     *
-     * @param name The name of the player.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-    /**
      * Returns the name of the player.
      *
      * @return The name of the player.
@@ -62,6 +58,16 @@ public class Player {
     public String getName() {
         return name;
     }
+
+    /**
+     * Sets the name of the player.
+     *
+     * @param name The name of the player.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /**
      * Returns the health of the player.
      *
@@ -70,22 +76,7 @@ public class Player {
     public int getHealth() {
         return health;
     }
-    /**
-     * Returns the carrying weight limit of the player.
-     *
-     * @return The carrying weight limit of the player.
-     */
-    public int getWeight() {
-        return weight;
-    }
-    /**
-     * Returns the name of the room the player is in.
-     *
-     * @return The name of the room the player is in.
-     */
-    public String getRoomName() {
-        return roomName;
-    }
+
     /**
      * Sets the health of the player.
      *
@@ -94,6 +85,16 @@ public class Player {
     public void setHealth(int health) {
         this.health = health;
     }
+
+    /**
+     * Returns the carrying weight limit of the player.
+     *
+     * @return The carrying weight limit of the player.
+     */
+    public int getWeight() {
+        return weight;
+    }
+
     /**
      * Sets the carrying weight limit of the player.
      *
@@ -102,6 +103,16 @@ public class Player {
     private void setWeight(int weight) {
         this.weight = weight;
     }
+
+    /**
+     * Returns the name of the room the player is in.
+     *
+     * @return The name of the room the player is in.
+     */
+    public String getRoomName() {
+        return roomName;
+    }
+
     /**
      * Sets the name of the room the player is in.
      *
@@ -110,14 +121,7 @@ public class Player {
     public void setRoomName(String roomName) {
         this.roomName = roomName;
     }
-    /**
-     * Sets the items the player is holding.
-     *
-     * @param items The items the player is holding.
-     */
-    public void setItems(Items items) {
-        this.items = items;
-    }
+
     /**
      * Adds an item to the player's inventory.
      *
@@ -126,13 +130,14 @@ public class Player {
      */
     public boolean addItem(Item item) {
         items.addItem(item.getName(), item);
-        int tempWeight =this.weight - item.getWeight();
-        if(tempWeight>0){
+        int tempWeight = this.weight - item.getWeight();
+        if (tempWeight > 0) {
             setWeight(tempWeight);
             return true;
         }
         return false;
     }
+
     /**
      * Deletes an item from the player's inventory.
      *
@@ -142,6 +147,7 @@ public class Player {
         setWeight(this.weight + items.getItemsByName(itemName).getWeight());
         items.deleteItem(itemName);
     }
+
     /**
      * Returns the items the player is holding.
      *
@@ -149,6 +155,15 @@ public class Player {
      */
     public Items getItems() {
         return items;
+    }
+
+    /**
+     * Sets the items the player is holding.
+     *
+     * @param items The items the player is holding.
+     */
+    public void setItems(Items items) {
+        this.items = items;
     }
 
 }
