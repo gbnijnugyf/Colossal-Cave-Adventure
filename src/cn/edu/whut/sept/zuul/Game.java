@@ -2,37 +2,122 @@
  * 该类是“World-of-Zuul”应用程序的主类。
  * 《World of Zuul》是一款简单的文本冒险游戏。用户可以在一些房间组成的迷宫中探险。
  * 你们可以通过扩展该游戏的功能使它更有趣!.
- *
+ * <p>
  * 如果想开始执行这个游戏，用户需要创建Game类的一个实例并调用“play”方法。
- *
+ * <p>
  * Game类的实例将创建并初始化所有其他类:它创建所有房间，并将它们连接成迷宫；它创建解析器
  * 接收用户输入，并将用户输入转换成命令后开始运行游戏。
  *
- * @author  Michael Kölling and David J. Barnes
+ * @author Michael Kölling and David J. Barnes
  * @version 1.0
  */
 package cn.edu.whut.sept.zuul;
 
-public class Game
-{
-    private Parser parser;
+import cn.edu.whut.sept.zuul.Items.Item;
+import cn.edu.whut.sept.zuul.Items.ItemAttack;
+import cn.edu.whut.sept.zuul.Items.ItemDefense;
+import cn.edu.whut.sept.zuul.Items.Items;
+import cn.edu.whut.sept.zuul.Monster.Monster;
+import cn.edu.whut.sept.zuul.Monster.Monsters;
+import cn.edu.whut.sept.zuul.Players.Player;
+import cn.edu.whut.sept.zuul.Record.RecordPlayer;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.Scanner;
+
+import static cn.edu.whut.sept.zuul.util.FindKeyByValueInHashMap.getKeyByValue;
+
+public class Game {
+    private final Parser parser;
+
     private Room currentRoom;
+    private final Items allItems;
+    private final Monsters allMonsters;
+    private final HashMap<String, Room> allRoom;
+    private Player player;
 
     /**
      * 创建游戏并初始化内部数据和解析器.
      */
-    public Game()
-    {
+    public Game() {
+        allItems = new Items();
+        allMonsters = new Monsters();
+        allRoom = new HashMap<>();
+
         createRooms();
-        parser = new Parser();
+
+        parser = new Parser(this);
+    }
+
+    /**
+     * 加载玩家信息
+     */
+    private void loadPlayer() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("1.载入历史记录");
+        System.out.println("2.新建游戏");
+        System.out.println("3.退出");
+        System.out.print("请选择（编号）：");
+        String choice = scanner.nextLine();
+        if (!choice.equals("1") && !choice.equals("2")) {
+            System.exit(0);
+        }
+        String playerName = "";
+        //读取玩家姓名
+        System.out.print("请输入玩家昵称：");
+        playerName = scanner.nextLine();
+        //文件路径暂定为”testFile.csv“
+        RecordPlayer temp = new RecordPlayer("testFile.csv", playerName, allItems);
+
+        switch (choice) {
+            case "1":
+                if (!temp.load()) {
+                    System.out.println("找不到该玩家信息！");
+                    System.exit(0);
+                }
+                this.player = temp.getPlayer();
+                break;
+            case "2":
+                if (temp.checkIsInRecord()) {
+                    System.out.println("含有相同昵称玩家信息！");
+                    System.exit(0);
+                } else {
+                    this.player = new Player(playerName);
+                }
+
+                break;
+            default:
+                System.exit(0);
+                break;
+        }
     }
 
     /**
      * 创建所有房间对象并连接其出口用以构建迷宫.
      */
-    private void createRooms()
-    {
+    private void createRooms() {
+
+        ArrayList<Room> rooms = new ArrayList();
+        ArrayList<Item> items = new ArrayList();
+        ArrayList<Monster> monsters = new ArrayList();
         Room outside, theater, pub, lab, office;
+        Item sword, shield;
+        Monster satan;
+
+        //create monster
+        satan = new Monster("satan", 2, 2);
+        //加入所有怪物集合
+        allMonsters.addMonster(satan);
+
+        //create item
+        sword = new ItemAttack("sword", 2, 3);
+        shield = new ItemDefense("shield", 3, 3);
+        //加入所有物品集合
+        allItems.addItem("sword", sword);
+        allItems.addItem("shield", shield);
 
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -40,6 +125,22 @@ public class Game
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        //加入所有房间集合
+        allRoom.put("outside", outside);
+        allRoom.put("theater", theater);
+        allRoom.put("pub", pub);
+        allRoom.put("lab", lab);
+        allRoom.put("office", office);
+
+        //加入数组;
+        monsters.add(satan);
+        items.add(sword);
+        items.add(shield);
+        rooms.add(outside);
+        rooms.add(theater);
+        rooms.add(pub);
+        rooms.add(lab);
+        rooms.add(office);
 
         // initialise room exits
         outside.setExit("east", theater);
@@ -55,32 +156,46 @@ public class Game
 
         office.setExit("west", lab);
 
-        currentRoom = outside;  // start game outside
+        // initialise room items randomly
+        Random rand = new Random();// 生成随机数
+        int randNumber;
+        for (int i = 0; i < items.size(); i++) {
+            randNumber = rand.nextInt(rooms.size());
+            rooms.get(randNumber).setItem(items.get(i).getName(), items.get(i));
+        }
+        for (int i = 0; i < monsters.size(); i++) {
+            randNumber = rand.nextInt(rooms.size());
+            rooms.get(randNumber).setMonster(monsters.get(i));
+        }
+
+        loadPlayer();
+        currentRoom = allRoom.get(player.getRoomName());  // start game
     }
 
     /**
-     *  游戏主控循环，直到用户输入退出命令后结束整个程序.
+     * 游戏主控循环，直到用户输入退出命令后结束整个程序.
      */
-    public void play()
-    {
+    public void play() {
         printWelcome();
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
 
         boolean finished = false;
-        while (! finished) {
+        while (!finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
+
         }
         System.out.println("Thank you for playing.  Good bye.");
+
+        gameOver();
     }
 
     /**
      * 向用户输出欢迎信息.
      */
-    private void printWelcome()
-    {
+    private void printWelcome() {
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
@@ -91,28 +206,19 @@ public class Game
 
     /**
      * 执行用户输入的游戏指令.
+     *
      * @param command 待处理的游戏指令，由解析器从用户输入内容生成.
      * @return 如果执行的是游戏结束指令，则返回true，否则返回false.
      */
-    private boolean processCommand(Command command)
-    {
+    private boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
-        if(command.isUnknown()) {
+        if (command.isUnknown()) {
             System.out.println("I don't know what you mean...");
             return false;
         }
 
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("help")) {
-            printHelp();
-        }
-        else if (commandWord.equals("go")) {
-            goRoom(command);
-        }
-        else if (commandWord.equals("quit")) {
-            wantToQuit = quit(command);
-        }
+        wantToQuit = parser.handleCmd(command);
         // else command not recognised.
         return wantToQuit;
     }
@@ -120,56 +226,41 @@ public class Game
     // implementations of user commands:
 
     /**
-     * 执行help指令，在终端打印游戏帮助信息.
-     * 此处会输出游戏中用户可以输入的命令列表
+     * 由于执行go命令需要对当前房间进行读写操作，于是设置访问器
+     *
+     * @return 返回当前房间信息
      */
-    private void printHelp()
-    {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
-        System.out.println("Your command words are:");
-        parser.showCommands();
+    public Room getCurrentRoom() {
+        return currentRoom;
     }
 
     /**
-     * 执行go指令，向房间的指定方向出口移动，如果该出口连接了另一个房间，则会进入该房间，
-     * 否则打印输出错误提示信息.
+     * Sets the current room for the player.
+     *
+     * @param setCurrentRoom The room to set as the current room.
      */
-    private void goRoom(Command command)
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        }
-        else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
-        }
+    public void setCurrentRoom(Room setCurrentRoom) {
+        this.currentRoom = setCurrentRoom;
     }
 
     /**
-     * 执行Quit指令，用户退出游戏。如果用户在命令中输入了其他参数，则进一步询问用户是否真的退出.
-     * @return 如果游戏需要退出则返回true，否则返回false.
+     * Returns the player object.
+     *
+     * @return The player object.
      */
-    private boolean quit(Command command)
-    {
-        if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        }
-        else {
-            return true;  // signal that we want to quit
-        }
+    public Player getPlayer() {
+        return player;
+    }
+
+    /**
+     * Ends the game and performs necessary actions.
+     * Saves the player's current room and exits the game.
+     */
+    public void gameOver() {
+        String roomName = getKeyByValue(allRoom, currentRoom);
+        this.player.setRoomName(roomName);
+        RecordPlayer temp = new RecordPlayer("testFile.csv", player);
+        temp.save();
+        System.exit(0);
     }
 }
